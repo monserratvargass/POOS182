@@ -5,18 +5,19 @@
 }
 
 .form-editar{
-    width: 400px;
+    width: 600px;
     background: #24303c;
-    padding: 30px;
+    padding: 50px;
     margin: auto;
-    margin-top: 100px;
-    border-radius: 4px;
+    margin-top: 200px;
+    border-radius: 6px;
     font-family: 'calibri';
     color: white;
     box-shadow: 7px 13px 37px #000;
 }
 
 .form-editar h4{
+    text-align: center;
     font-size: 22px;
     margin-bottom: 20px;
 }
@@ -41,11 +42,18 @@
 }
 
 .form-editar botons {
+    bottom: center;
     width: 100%;
     background: #1f53c5;
     border: none;
     padding: 12px;
-    color: wgite;
+    color: white;
     margin: 16px 0;
     font-size: 16px;
+}
+
+.form-editar table {
+    border-radius: #000;
+    background-color: white;
+    color: #000;
 }
