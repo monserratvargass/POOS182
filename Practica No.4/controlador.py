@@ -29,7 +29,7 @@ class controladorBD:
             cursor=conex.cursor()
             #conH=self.encriptarContra(con)
             #datos=(nom,cor,conH)
-            sqlInsert="insert into TbRegistrados(Nombre,Precio,Clasificacion,Marca) values(?,?,?,?)"
+            sqlInsert="insert into AlmacenBebidas(Nombre,Precio,Clasificacion,Marca) values(?,?,?,?)"
 
             #5.Ejecutamos el Insert
             cursor.execute(sqlInsert)
@@ -48,7 +48,7 @@ class controladorBD:
             #3.Ejecutar lo de eliminar
             try:
                 cursor=conx.cursor()
-                sqlEliminar="delete from TbRegistrados where id="+id #Se eliminaran los registros a partir del id seleccionado
+                sqlEliminar="delete from AlmacenBebidas where id="+id #Se eliminaran los registros a partir del id seleccionado
                 #Ejecutamos y cerramos conexion
                 cursor.execute(sqlEliminar)
                 Elmusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
@@ -70,7 +70,7 @@ class controladorBD:
             #3.Ejecutar la consulta
             try:
                 cursor=conx.cursor()
-                sqlUpdate="update TbRegistrados set Nombre=?, Precio=?, Clasificacion=?, Marca=? where id="+id #Se actualizaran los registros a partir del id seleccionado
+                sqlUpdate="update AlmacenBebidas set Nombre=?, Precio=?, Clasificacion=?, Marca=? where id="+id #Se actualizaran los registros a partir del id seleccionado
                 #Ejecutamos y cerramos conexion
                 datos1=(nom,precio,clas,marca)
                 cursor.execute(sqlUpdate,datos1)
@@ -87,7 +87,7 @@ class controladorBD:
         conx=self.conexionBD()
         try:
             cursor=conx.cursor()
-            sqlConsulta="select * from TbRegistrados"
+            sqlConsulta="select * from AlmacenBebidas"
 
             cursor.execute(sqlConsulta)
             rsusuario=cursor.fetchall()
@@ -96,7 +96,75 @@ class controladorBD:
             return rsusuario
         except sqlite3.OperationalError:
             print("Error de importar usuarios")
+
+    def Calcular(self,precio):
+         #1.Realizar conexion BD
+        conx=self.conexionBD()
+        #2.Verificar que el id vacio
+        #if(precio==""):
+            #messagebox.showwarning("Cuidado","Escribe un identificador")
+        conx.close()
+        #else:
+            #3.Ejecutar la consulta
+        try:
+            cursor=conx.cursor()
+            sqlCalculate="select avg(Precio) as average from AlmacenBebidas" #Se actualizaran los registros a partir del id seleccionado
+            #Ejecutamos y cerramos conexion
+            datos1=(precio)
+            cursor.execute(sqlCalculate,datos1)
+            Calusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
+            conx.commit()
+            conx.close()
+
+            return Calusuario
+        except sqlite3.OperationalError:
+            print("Error de calculo")
             
+    def ContarXMarca(self,id,marca):
+         #1.Realizar conexion BD
+        conx=self.conexionBD()
+        #2.Verificar que el id vacio
+        if(marca==""):
+            messagebox.showwarning("Cuidado","Escribe una marca")
+            conx.close()
+        else:
+            #3.Ejecutar la consulta
+            try:
+                cursor=conx.cursor()
+                sqlContar1="select Marca, count(ID) from AlmacenBebidas group by Marca where Marca="+marca #Se actualizaran los registros a partir del id seleccionado
+                #Ejecutamos y cerramos conexion
+                datos1=(marca)
+                cursor.execute(sqlContar1,datos1)
+                UPusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
+                conx.commit()
+                conx.close()
+
+                return UPusuario
+            except sqlite3.OperationalError:
+                print("Error de actualizacion")
+
+    def ContarXClasificacion(self,id,clas):
+         #1.Realizar conexion BD
+        conx=self.conexionBD()
+        #2.Verificar que el id vacio
+        if(clas==""):
+            messagebox.showwarning("Cuidado","Escribe una clasificacion")
+            conx.close()
+        else:
+            #3.Ejecutar la consulta
+            try:
+                cursor=conx.cursor()
+                sqlContar1="select Clasificacion, count(ID) from AlmacenBebidas group by Clasificacion where Clasificacion="+clas #Se actualizaran los registros a partir del id seleccionado
+                #Ejecutamos y cerramos conexion
+                datos1=(clas)
+                cursor.execute(sqlContar1,datos1)
+                UPusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
+                conx.commit()
+                conx.close()
+
+                return UPusuario
+            except sqlite3.OperationalError:
+                print("Error de actualizacion")
     #Para encriptar:
     #def encriptarContra(self,con):
      #   conPlana=con
