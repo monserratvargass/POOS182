@@ -74,7 +74,7 @@ def ejecutaMostrar():
           tabla.delete(datoc)
     
       for USU in RSUSU:
-          cadenacon=str(USU[0])+" "+USU[1]+" "+USU[2]+" "+str(USU[3])+" "+str(USU[4])
+          cadenacon=str(USU[0])+" "+USU[1]+" "+str(USU[2])+" "+USU[3]+" "+USU[4]
 
           tabla.insert('',tk.END, values=cadenacon)
 
@@ -86,18 +86,34 @@ def ejecutaMostrar():
           tabla.bind('<<TreeviewSelect>>', ejecutaMostrar)
 
 def ejecutaPromedio():
-    prom=controlador.Calcular()
+    controlador.Calcular()
 
-    for PROM in prom:
-        cadenapro=str(PROM[2])
-    
-    messagebox.showinfo('El promedio es:'+cadenapro)
+    #for PROM in prom:
+        #cadenapro=str(PROM[2])
+
+    messagebox.showinfo('Promedio','el promedio es:')
+
+    '''if(prom):
+        textBus.config(state='normal')
+        textBus.delete(1.0, 'end')
+        textBus.insert('end',cadenapro)
+        textBus.config(state='disabled')'''
 
 def ejecutaContarMarca():
     controlador.ContarXMarca(varmar.get())
 
+    #tabla.delete(*tabla.get_children())
+
+    '''for marca in contarM:
+        tabla.insert('','end',text=marca[0],values=(marca[1],marca[2]))'''
+
 def ejecutaContarClasificacion():
     controlador.ContarXClasificacion(varclasif.get())
+
+    #tabla.delete(*tabla.get_children())
+
+    '''for clasi in contarC:
+        tabla.insert('','end',text=clasi[0],values=(clasi[1],clasi[2],clasi[3]))'''
 
 ventana=Tk()
 ventana.title("Almacen de bebidas")
@@ -200,6 +216,11 @@ tabla.pack()
 #Pestaña 5 calcular promedio
 
 titulo5=Label(pestana4,text="Promedio precio:",fg="pink",font=("Modern",18)).pack()
+
+'''subBus=Label(pestana5,text="Promedio de precios",fg="green",font=("Modern",18)).pack()
+textBus=tk.Text(pestana4,height=10,width=104)
+textBus.pack()'''
+
 btnCalcularPromedio=Button(pestana5,text="Calcular",command=ejecutaPromedio).pack()
 
 #pestaña 6 para contar las bebidas por marca

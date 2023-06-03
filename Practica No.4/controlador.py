@@ -28,11 +28,11 @@ class controladorBD:
             #4. Preparamos las variables necesarias
             cursor=conex.cursor()
             #conH=self.encriptarContra(con)
-            #datos=(nom,cor,conH)
+            datos=(nom,precio,clas,marca)
             sqlInsert="insert into AlmacenBebidas(Nombre,Precio,Clasificacion,Marca) values(?,?,?,?)"
 
             #5.Ejecutamos el Insert
-            cursor.execute(sqlInsert)
+            cursor.execute(sqlInsert,datos)
             conex.commit()
             conex.close()
             messagebox.showinfo("Exito","Usuario guardado")
@@ -97,7 +97,7 @@ class controladorBD:
         except sqlite3.OperationalError:
             print("Error de importar usuarios")
 
-    def Calcular(self,precio):
+    def Calcular(self):
          #1.Realizar conexion BD
         conx=self.conexionBD()
         #2.Verificar que el id vacio
@@ -108,10 +108,10 @@ class controladorBD:
             #3.Ejecutar la consulta
         try:
             cursor=conx.cursor()
-            sqlCalculate="select avg(Precio) as average from AlmacenBebidas" #Se actualizaran los registros a partir del id seleccionado
+            sqlCalculate="select avg(Precio) as precio_bebidas from AlmacenBebidas" #Promedio del precio de la tabla almacenBebidas
             #Ejecutamos y cerramos conexion
-            datos1=(precio)
-            cursor.execute(sqlCalculate,datos1)
+            #datos1=(precio)
+            cursor.execute(sqlCalculate)
             Calusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
             conx.commit()
             conx.close()
@@ -131,7 +131,7 @@ class controladorBD:
             #3.Ejecutar la consulta
             try:
                 cursor=conx.cursor()
-                sqlContar1="select Marca, count(ID) from AlmacenBebidas group by Marca where Marca="+marca #Se actualizaran los registros a partir del id seleccionado
+                sqlContar1="select Marca, count(ID) from AlmacenBebidas group by Marca where Marca="+marca #buscar por marca
                 #Ejecutamos y cerramos conexion
                 datos1=(marca)
                 cursor.execute(sqlContar1,datos1)
@@ -154,7 +154,7 @@ class controladorBD:
             #3.Ejecutar la consulta
             try:
                 cursor=conx.cursor()
-                sqlContar1="select Clasificacion, count(ID) from AlmacenBebidas group by Clasificacion where Clasificacion="+clas #Se actualizaran los registros a partir del id seleccionado
+                sqlContar1="select Clasificacion, count(ID) from AlmacenBebidas group by Clasificacion where Clasificacion="+clas #Buscar por clasificacion
                 #Ejecutamos y cerramos conexion
                 datos1=(clas)
                 cursor.execute(sqlContar1,datos1)
