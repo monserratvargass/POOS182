@@ -88,32 +88,11 @@ def ejecutaMostrar():
 def ejecutaPromedio():
     controlador.Calcular()
 
-    #for PROM in prom:
-        #cadenapro=str(PROM[2])
-
-    messagebox.showinfo('Promedio','el promedio es:')
-
-    '''if(prom):
-        textBus.config(state='normal')
-        textBus.delete(1.0, 'end')
-        textBus.insert('end',cadenapro)
-        textBus.config(state='disabled')'''
-
 def ejecutaContarMarca():
     controlador.ContarXMarca(varmar.get())
 
-    #tabla.delete(*tabla.get_children())
-
-    '''for marca in contarM:
-        tabla.insert('','end',text=marca[0],values=(marca[1],marca[2]))'''
-
 def ejecutaContarClasificacion():
     controlador.ContarXClasificacion(varclasif.get())
-
-    #tabla.delete(*tabla.get_children())
-
-    '''for clasi in contarC:
-        tabla.insert('','end',text=clasi[0],values=(clasi[1],clasi[2],clasi[3]))'''
 
 ventana=Tk()
 ventana.title("Almacen de bebidas")

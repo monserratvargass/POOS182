@@ -103,24 +103,26 @@ class controladorBD:
         #2.Verificar que el id vacio
         #if(precio==""):
             #messagebox.showwarning("Cuidado","Escribe un identificador")
-        conx.close()
+        #conx.close()
         #else:
             #3.Ejecutar la consulta
         try:
             cursor=conx.cursor()
-            sqlCalculate="select avg(Precio) as precio_bebidas from AlmacenBebidas" #Promedio del precio de la tabla almacenBebidas
+            sqlCalculate="select avg(Precio) from AlmacenBebidas" #Promedio del precio de la tabla almacenBebidas
             #Ejecutamos y cerramos conexion
             #datos1=(precio)
             cursor.execute(sqlCalculate)
             Calusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
+            promedio=Calusuario [0]
             conx.commit()
+            messagebox.showinfo('Promedio','El precio promedio de las bebidas es:'+str(promedio))
             conx.close()
 
             return Calusuario
         except sqlite3.OperationalError:
             print("Error de calculo")
             
-    def ContarXMarca(self,id,marca):
+    def ContarXMarca(self,marca):
          #1.Realizar conexion BD
         conx=self.conexionBD()
         #2.Verificar que el id vacio
@@ -131,19 +133,21 @@ class controladorBD:
             #3.Ejecutar la consulta
             try:
                 cursor=conx.cursor()
-                sqlContar1="select Marca, count(ID) from AlmacenBebidas group by Marca where Marca="+marca #buscar por marca
+                sqlContar1="select count(*) from AlmacenBebidas where Marca= ?" #buscar por marca
                 #Ejecutamos y cerramos conexion
                 datos1=(marca)
-                cursor.execute(sqlContar1,datos1)
+                cursor.execute(sqlContar1,(datos1,))
                 UPusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
+                marcabebidas=UPusuario[0]
                 conx.commit()
+                messagebox.showinfo('Bebidas por marca','Cantidad por marca'+marca+'es:'+str(marcabebidas))
                 conx.close()
 
                 return UPusuario
             except sqlite3.OperationalError:
-                print("Error de actualizacion")
+                print("Error de consulta")
 
-    def ContarXClasificacion(self,id,clas):
+    def ContarXClasificacion(self,clas):
          #1.Realizar conexion BD
         conx=self.conexionBD()
         #2.Verificar que el id vacio
@@ -154,61 +158,16 @@ class controladorBD:
             #3.Ejecutar la consulta
             try:
                 cursor=conx.cursor()
-                sqlContar1="select Clasificacion, count(ID) from AlmacenBebidas group by Clasificacion where Clasificacion="+clas #Buscar por clasificacion
+                sqlContar1="select count(*) from AlmacenBebidas where Clasificacion= ?" #Buscar por clasificacion
                 #Ejecutamos y cerramos conexion
                 datos1=(clas)
-                cursor.execute(sqlContar1,datos1)
+                cursor.execute(sqlContar1,(datos1,))
                 UPusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
+                marcaclasificacion=UPusuario[0]
                 conx.commit()
+                messagebox.showinfo('Bebidas por marca','Cantidad por marca'+clas+'es:'+str(marcaclasificacion))
                 conx.close()
 
                 return UPusuario
             except sqlite3.OperationalError:
-                print("Error de actualizacion")
-    #Para encriptar:
-    #def encriptarContra(self,con):
-     #   conPlana=con
-      #  conPlana= conPlana.encode() #Convertir a bytes
-       # sal= bcrypt.gensalt()
-        #Encriptamos
-        #conHa=bcrypt.hashpw(conPlana,sal)
-        #print(conHa)
-
-        #Regresamos la contraseña encriptada
-        #return conHa
-    
-    #def consultarUsuario(self,id):
-        #1.Realizar conexion BD
-     #   conx=self.conexionBD()
-        #2.Verificar que el id vacio
-      #  if(id==""):
-       #     messagebox.showwarning("Cuidado","Escribe un identificador")
-        #    conx.close()
-        #else:
-            #3.Ejecutar la consulta
-        '''   try:
-                cursor=conx.cursor()
-                sqlSelect="select * from TbRegistrados where id="+id
-                #Ejecutamos y cerramos conexion
-                cursor.execute(sqlSelect)
-                RSusuario=cursor.fetchall() #Toma lo que esta en el cursor, mueve hacia la vista
-                conx.close()
-
-                return RSusuario
-            except sqlite3.OperationalError:
-                print("Error de consulta")'''
-        
-    #def importarUsuario(self):
-        #Conexion a la BD
-     #   conx=self.conexionBD()
-      #  try:
-       #     cursor=conx.cursor()
-        #    sqlConsulta="select * from TbRegistrados"
-
-         #   cursor.execute(sqlConsulta)
-          #  rsusuario=cursor.fetchall()
-           # conx.close()
-
-            #return rsusuario
-        #except sqlite3.OperationalError:
-         #   print("Error de importar usuarios")
+                print("Error de consulta")
