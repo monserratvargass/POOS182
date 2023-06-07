@@ -1,0 +1,61 @@
+.form-editar{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.form-editar{
+    width: 600px;
+    background: #24303c;
+    padding: 50px;
+    margin: auto;
+    margin-top: 200px;
+    border-radius: 6px;
+    font-family: 'calibri';
+    color: white;
+    box-shadow: 7px 13px 37px #000;
+}
+
+.form-editar h4{
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #f3ff00
+}
+
+.controls{
+    width: 100%;
+    background: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    border: 1px solid #1f53c5;
+    font-family: 'calibri';
+    font-size: 18px;
+    color: white;
+
+}
+
+.form-editar p {
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.form-editar botons {
+    bottom: center;
+    width: 100%;
+    background: #1f53c5;
+    border: none;
+    padding: 12px;
+    color: white;
+    margin: 16px 0;
+    font-size: 16px;
+}
+
+.form-editar table {
+    border-radius: #000;
+    background-color: white;
+    background-image: 'C:/Users/monse/Documents/POO/Diseño de interfaces P1/POOS182/Examen primer parcial/fondo.png';
+    color: #000;
+}
