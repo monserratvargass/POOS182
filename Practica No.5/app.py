@@ -1,5 +1,6 @@
 #nombre.server.py o app.py
-from flask import Flask, render_template, request #Importar libreria
+from flask import Flask, render_template, request, redirect,url_for,flash #Importar libreria
+from flask_mysqldb import MySQL
 
 app=Flask(__name__) #Inicializacion del servidor Flask
 
@@ -8,6 +9,10 @@ app.config['MYSQL_HOST']="localhost" #Especificar en que servidor trabajamos
 app.config['MYSQL_USER']="root" #Especificar usuario
 app.config['MYSQL_PASSWORD']="" #Especificar contraseña
 app.config['MYSQL_DB']="dbflask" #Especificar a que base de datos
+
+app.secret_key='mysecretkey' #Permite hacer envios a traves de post
+
+mysql=MySQL(app)
 
 #Declaracion de rutas
 
@@ -20,11 +25,16 @@ def index():
 @app.route('/guardar',methods=['POST'])
 def guardar():
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
-        titulo=request.form['txtTitulo']
-        artista=request.form['txtArtista']
-        anio=request.form['txtAnio']
-        print(titulo,artista,anio)
-    return "La info del album llego a su ruta"
+        Vtitulo=request.form['txtTitulo']
+        Vartista=request.form['txtArtista']
+        Vanio=request.form['txtAnio']
+        #print(titulo,artista,anio)
+        CS=mysql.connection.cursor()
+        CS.execute('insert into album(titulo,artista,anio) values(%s,%s,%s)',(Vtitulo,Vartista,Vanio)) #Para ejecutar codigo sql, y pasamos parametros
+        mysql.connection.commit()
+
+    flash('Album agregado correctamente')
+    return redirect(url_for('index')) #Reedireccionamiento a la vista index
 
 @app.route('/eliminar')
 def eliminar():
