@@ -22,6 +22,34 @@
         <input type="text" name="txtArtista" placeholder="Escribe artista">
         <input type="number" name="txtAnio" placeholder="Escribe año">
         <button type="submit">Guardar</button>
-    </form>    
+    </form> 
+    <br>
+    <br>
+    <h2>Albums guardados</h2>   
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <td>Id:</td>
+                <td>Nombre:</td>
+                <td>Artista:</td>
+                <td>Año de publicacion:</td>
+            </tr>
+        </thead>
+        <tbody>
+            {%for alb in listaAlbum %}
+            <tr>
+                <td>{{ alb.0 }}</td>
+                <td>{{ alb.1 }}</td>
+                <td>{{ alb.2 }}</td>
+                <td>{{ alb.3 }}</td>
+                <td>
+                    <a href="#">Editar</a>
+                    <a href="#">Eliminar</a>
+                </td>
+            </tr>
+            {%endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

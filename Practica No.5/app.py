@@ -4,13 +4,14 @@ from flask_mysqldb import MySQL
 
 app=Flask(__name__) #Inicializacion del servidor Flask
 
-#Configuraciones para la conexion de BD
+#Configuraciones para la conexion de   
 app.config['MYSQL_HOST']="localhost" #Especificar en que servidor trabajamos
 app.config['MYSQL_USER']="root" #Especificar usuario
 app.config['MYSQL_PASSWORD']="" #Especificar contraseña
 app.config['MYSQL_DB']="dbflask" #Especificar a que base de datos
 
 app.secret_key='mysecretkey' #Permite hacer envios a traves de post
+
 
 mysql=MySQL(app)
 
@@ -20,7 +21,11 @@ mysql=MySQL(app)
 #Ruta se compone de nombre y funcion
 @app.route('/')
 def index():
-    return render_template('index.html')
+    curSelect=mysql.connection.cursor()
+    curSelect.execute('select * from album')
+    consulta=curSelect.fetchall() 
+    #print(consulta)
+    return render_template('index.html', listaAlbum=consulta) #Nos sirve para concatenar las consultas y abrir rutas
 
 @app.route('/guardar',methods=['POST'])
 def guardar():
