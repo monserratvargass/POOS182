@@ -23,7 +23,7 @@ mysql=MySQL(app)
 def index():
     curSelect=mysql.connection.cursor()
     curSelect.execute('select * from album')
-    consulta=curSelect.fetchall() 
+    consulta=curSelect.fetchall() #Para traer varios registros
     #print(consulta)
     return render_template('index.html', listaAlbum=consulta) #Nos sirve para concatenar las consultas y abrir rutas
 
@@ -40,6 +40,28 @@ def guardar():
 
     flash('Album agregado correctamente')
     return redirect(url_for('index')) #Reedireccionamiento a la vista index
+
+@app.route('/actualizar/<id>',methods=['POST'])
+def actualizar(id):
+    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
+        Vtitulo=request.form['txtTitulo']
+        Vartista=request.form['txtArtista']
+        Vanio=request.form['txtAnio']
+    
+        curUpdate=mysql.connection.cursor()
+        curUpdate.execute('update album set titulo=%s, artista=%s, anio=%s where id=%s', (Vtitulo,Vartista,Vanio,id))
+        mysql.connection.commit() #Para actualizar
+
+    flash('Album actualizado correctamente')
+    return redirect(url_for('index')) #Reedireccionamiento a la vista index
+
+@app.route('/editar/<id>')
+def editar(id):
+    curEditar=mysql.connection.cursor()
+    curEditar.execute('select * from album where id= %s', (id,))#Coma importante por que lo confunde con una tupla
+    consultaID=curEditar.fetchone() #Para traer unicamente un registro
+
+    return render_template('editarAlbum.html', album=consultaID)
 
 @app.route('/eliminar')
 def eliminar():
