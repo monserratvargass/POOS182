@@ -63,9 +63,27 @@ def editar(id):
 
     return render_template('editarAlbum.html', album=consultaID)
 
-@app.route('/eliminar')
-def eliminar():
-    return "Se elimino el almbun de la BD"
+@app.route('/eliminar/<id>',methods=['POST'])
+def eliminar(id):
+    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
+        Vtitulo=request.form['txtTitulo']
+        Vartista=request.form['txtArtista']
+        Vanio=request.form['txtAnio']
+    
+        curDelete=mysql.connection.cursor()
+        curDelete.execute('delete from album where id=%s', (id)) 
+        mysql.connection.commit() #Para actualizar
+
+    flash('Album eliminado correctamente')
+    return redirect(url_for('index')) #Reedireccionamiento a la vista index
+
+@app.route('/borrar/<id>')
+def borrar(id):
+    curBorrar=mysql.connection.cursor()
+    curBorrar.execute('select * from album where id= %s', (id,))#Coma importante por que lo confunde con una tupla
+    consultaID=curBorrar.fetchone() #Para traer unicamente un registro
+
+    return render_template('eliminarAlbum.html', album=consultaID)
 
 #Ejecucion del servidor
 if __name__=='__main__':
