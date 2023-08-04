@@ -1,24 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar album</title>
-</head>
+
 <body>
+
+        {%extends 'plantilla.html'%}  
+{%block body%}
     <br>
-    <br>
-    <center>
-    <br>
-    <h1> Actualizar album </h1>
-    <br>
-    <br>
+    <h1 class="display-1 text-center mt-5 mb-5 text-danger"> Actualizar album </h1>
+    <div container>
+    <div class="card card-body">
     <form action="/actualizar/{{ album.0 }}" method="POST">
-        <input type="text" name="txtTitulo", value="{{ album.1 }}" >
-        <input type="text" name="txtArtista", value="{{ album.2 }}">
-        <input type="number" name="txtAnio", value="{{ album.3 }}" > 
-        <button type="submit">Actualizar</button>
+        <div class="mb-3">
+        <input type="text" class="form-control" name="txtTitulo", value="{{ album.1 }}" >
+        </div>
+        <div class="mb-3">
+        <input type="text" class="form-control" name="txtArtista", value="{{ album.2 }}">
+        </div>
+        <div class="mb-3">
+        <input type="number" class="form-control" name="txtAnio", value="{{ album.3 }}" >
+        </div>
+
+        <button type="submit" class="btn btn-outline-success">Actualizar</button>
     </form>
-    </center>
+    </div>
+</div>
+    {%endblock%}
 </body>
 </html>
