@@ -83,7 +83,7 @@ def borrar(id):
     return render_template('eliminarFruteria.html', fruteria=consultaID)
 
 @app.route('/consultar')
-def borrar():
+def consultar():
     curSelect=mysql.connection.cursor()
     curSelect.execute('select * from tbfrutas')
     consulta=curSelect.fetchall() #Para traer varios registros
@@ -91,13 +91,15 @@ def borrar():
     return render_template('consultarFruteria.html', listaFruteria=consulta) #Nos sirve para concatenar las consultas y abrir rutas
 
 
-@app.route('/buscar/<id>')
-def buscar(id):
-    curSelect=mysql.connection.cursor()
-    curSelect.execute('select * from tbfrutas where id=%s', (id,))
-    consulta=curSelect.fetchone() #Para traer solo un registro
-    #print(consulta)
-    return render_template('buscarFruteria.html', listaFruteria=consulta) 
+@app.route('/buscar',methods=['POST'] )
+def buscar():
+    Varbuscar= request.form['txtbuscar']
+    print(Varbuscar)
+    CC= mysql.connection.cursor()
+    CC.execute('select * from tbfrutas where fruta LIKE %s', (f'%{Varbuscar}%',))
+    confruta= CC.fetchall()
+    print(confruta)
+    return render_template('buscarFruteria.html', listafruta = confruta)
 
 #Ejecucion del servidor
 if __name__=='__main__':
